@@ -9,9 +9,9 @@ private:
 public:
   VertexBuffer(void *data, int size);
 
-  void bind();
+  void bind() const;
 
-  void unbind();
+  void unbind() const;
 
   ~VertexBuffer();
 };

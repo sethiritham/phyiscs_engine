@@ -1,5 +1,5 @@
 #include "../vendor/glad/include/glad/glad.h"
-#include "Renderer.h"
+#include "VertexArray.h"
 #include "Window.h"
 #include "shader.h"
 #include <GLFW/glfw3.h>
@@ -15,17 +15,15 @@ int main() {
 
   Window window(800, 800, "PHYISCS RENDERER");
 
-  unsigned int VAO;
-
   VertexBuffer vertex_buffer(vertices, sizeof(vertices));
 
-  glGenVertexArrays(1, &VAO);
-  glBindVertexArray(VAO);
+  VertexArrayLayout layout;
 
-  vertex_buffer.bind();
+  layout.add_layout_element({3, GL_FLOAT, GL_FALSE});
 
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
-  glEnableVertexAttribArray(0);
+  VertexArrayBuffer *vert_array_buffer = new VertexArrayBuffer(layout);
+
+  vert_array_buffer->add_buffer(vertex_buffer);
 
   shaderSources shader_sources =
       parseShader("../src/graphics/solid_color.shader");
@@ -52,14 +50,14 @@ int main() {
     glClear(GL_COLOR_BUFFER_BIT);
 
     glUseProgram(shader_program);
-    glBindVertexArray(VAO);
+    vert_array_buffer->bind();
 
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
     window.swap_buffers();
   }
 
-  glDeleteVertexArrays(1, &VAO);
+  delete vert_array_buffer;
 
   glDeleteProgram(shader_program);
   glDeleteShader(vertex_shader);
