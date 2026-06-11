@@ -1,12 +1,12 @@
 #include "../vendor/glad/include/glad/glad.h"
 #include "GLFW/glfw3.h"
-#include "Renderer.h"
+#include "VertexBuffer.h"
 #include <vector>
 
 struct VertexArrayLayoutElement {
-  unsigned int size;
+  unsigned int count;
   unsigned int type;
-  unsigned int normalized;
+  unsigned char normalized;
 };
 
 class VertexArrayLayout {
@@ -30,6 +30,19 @@ class VertexArrayBuffer {
 private:
   unsigned int m_VertexBuffer_ID;
   VertexArrayLayout layout;
+
+  static unsigned int get_size_of_type(unsigned int type) {
+    switch (type) {
+    case GL_FLOAT:
+      return 4;
+    case GL_UNSIGNED_INT:
+      return 1;
+    case GL_UNSIGNED_BYTE:
+      return 1;
+    }
+
+    return 0;
+  }
 
 public:
   VertexArrayBuffer(VertexArrayLayout layout);

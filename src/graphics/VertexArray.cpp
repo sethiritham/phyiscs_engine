@@ -1,9 +1,10 @@
 #include "VertexArray.h"
+#include <cstdint>
 
 void VertexArrayLayout::add_layout_element(
     VertexArrayLayoutElement layout_element) {
   m_vertex_attribs.push_back(layout_element);
-  m_stride += sizeof(layout_element);
+  m_stride += 3 * sizeof(unsigned int);
 }
 
 unsigned int VertexArrayLayout::get_stride() { return m_stride; }
@@ -26,13 +27,19 @@ void VertexArrayBuffer::add_buffer(const VertexBuffer &vb) {
   elements = layout.get_elemets();
 
   unsigned int stride = layout.get_stride();
+  int accumalator = 0;
+  size_t offset = 0;
 
   for (unsigned int i = 0; i < elements.size(); i++) {
-    glVertexAttribPointer(i, elements[i].size, elements[i].type,
+
+    glVertexAttribPointer(i, elements[i].count, elements[i].type,
                           elements[i].normalized, stride,
-                          (void *)(i * elements[i].size));
+                          (void *)(intptr_t)offset);
 
     glEnableVertexAttribArray(i);
+
+    accumalator += elements[i].count;
+    offset += elements[i].count * get_size_of_type(elements[i].type);
   }
 }
 
