@@ -28,28 +28,36 @@ int main() {
   shaderSources shader_sources =
       parseShader("../src/graphics/solid_color.shader");
 
-  const char *vertex_shader_source = shader_sources.vertexShaderSource.c_str();
-  const char *fragment_shader_source =
-      shader_sources.fragmentShaderSource.c_str();
+  Shader *shader = new Shader();
 
-  unsigned int vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-  glShaderSource(vertex_shader, 1, &vertex_shader_source, NULL);
-  glCompileShader(vertex_shader);
+  // const char *vertex_shader_source =
+  // shader_sources.vertexShaderSource.c_str(); const char
+  // *fragment_shader_source =
+  //     shader_sources.fragmentShaderSource.c_str();
 
-  unsigned int fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-  glShaderSource(fragment_shader, 1, &fragment_shader_source, NULL);
-  glCompileShader(fragment_shader);
+  shader->parse("../src/graphics/solid_color.shader");
+  shader->compile_shaders();
+  shader->compile_shaders();
+  shader->attach_shaders_and_link_program();
 
-  unsigned int shader_program = glCreateProgram();
-  glAttachShader(shader_program, vertex_shader);
-  glAttachShader(shader_program, fragment_shader);
-  glLinkProgram(shader_program);
-
+  // unsigned int vertex_shader = glCreateShader(GL_VERTEX_SHADER);
+  // glShaderSource(vertex_shader, 1, &vertex_shader_source, NULL);
+  // glCompileShader(vertex_shader);
+  //
+  // unsigned int fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
+  // glShaderSource(fragment_shader, 1, &fragment_shader_source, NULL);
+  // glCompileShader(fragment_shader);
+  //
+  // unsigned int shader_program = glCreateProgram();
+  // glAttachShader(shader_program, vertex_shader);
+  // glAttachShader(shader_program, fragment_shader);
+  // glLinkProgram(shader_program);
+  //
   while (!window.should_close()) {
     glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glUseProgram(shader_program);
+    shader->use_shader_program();
     vert_array_buffer->bind();
 
     glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -58,10 +66,7 @@ int main() {
   }
 
   delete vert_array_buffer;
-
-  glDeleteProgram(shader_program);
-  glDeleteShader(vertex_shader);
-  glDeleteShader(fragment_shader);
+  delete shader;
 
   return 0;
 }
