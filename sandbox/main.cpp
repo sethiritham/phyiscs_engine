@@ -1,4 +1,5 @@
 #include "../vendor/glad/include/glad/glad.h"
+#include "IndexBuffer.h"
 #include "Object.h"
 #include "VertexArray.h"
 #include "Window.h"
@@ -10,12 +11,17 @@
 int main() {
 
   float centre[3] = {0.0f, 0.0f, 0.0f};
-  Triangle *triangle_1 = new Triangle(centre, 0.2f, 0.2f, right_angle);
-  std::array<Vertex, 3> vertices = triangle_1->generate_vertices();
+  Quadrilateral *quad_1 = new Quadrilateral(centre, 0.4f, square);
+
+  quad_1->generate_quad();
+
+  std::array<Vertex, 4> vertices = quad_1->get_vertices();
+  std::array<int, 6> indices = quad_1->get_indices();
 
   Window *window = new Window(800, 800, "PHYISCS RENDERER");
 
   VertexBuffer vertex_buffer(vertices.data(), vertices.size() * sizeof(Vertex));
+  IndexBuffer index_buffer(indices.data(), indices.size() * sizeof(int));
 
   VertexArrayLayout layout;
   layout.add_layout_element({3, GL_FLOAT, GL_FALSE});
@@ -23,6 +29,7 @@ int main() {
 
   VertexArrayBuffer *vert_array_buffer = new VertexArrayBuffer(layout);
   vert_array_buffer->add_buffer(vertex_buffer);
+  index_buffer.bind();
 
   Shader *shader = new Shader();
   shader->parse("../src/graphics/solid_color.shader");
@@ -36,7 +43,7 @@ int main() {
     shader->use_shader_program();
     vert_array_buffer->bind();
 
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 
     window->swap_buffers();
   }

@@ -1,9 +1,8 @@
 #include "../vendor/glad/include/glad/glad.h"
-#include "GLFW/glfw3.h"
 #include <array>
-#include <vector>
 
 enum TriangleTypes { right_angle, equilateral, isoceles };
+enum QuadTypes { square, rectangle };
 
 struct Vertex {
   float x;
@@ -30,4 +29,33 @@ public:
   std::array<Vertex, 3> generate_vertices();
 
   ~Triangle();
+};
+
+class Quadrilateral {
+private:
+  float m_centre[3];
+  float m_width;
+  float m_height;
+  QuadTypes m_quad_type;
+  std::array<Vertex, 4> m_vertices;
+  std::array<int, 6> m_indices;
+
+public:
+  Quadrilateral(float centre[3], float width, float height,
+                QuadTypes quad_type);
+  Quadrilateral(float centre[3], float side, QuadTypes quad_type);
+
+  void generate_quad();
+
+  std::array<Vertex, 4> get_vertices();
+
+  std::array<int, 6> get_indices();
+
+  ~Quadrilateral();
+};
+
+class Sphere {
+private:
+  float m_centre[3];
+  float m_width;
 };
