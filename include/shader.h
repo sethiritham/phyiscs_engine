@@ -1,5 +1,6 @@
 #pragma once
 #include "../vendor/glad/include/glad/glad.h"
+#include "glm/ext/matrix_float4x4.hpp"
 #include <string>
 
 struct shaderSources {
@@ -26,6 +27,8 @@ public:
   void attach_shaders_and_link_program();
 
   void use_shader_program() const;
+
+  void set_uniform_mat4(const char *matrix_name, glm::mat4 matrix);
 
   ~Shader();
 };

@@ -90,6 +90,12 @@ void Shader::attach_shaders_and_link_program() {
 
 void Shader::use_shader_program() const { glUseProgram(m_shader_program); }
 
+void Shader::set_uniform_mat4(const char *matrix_name, glm::mat4 matrix) {
+  unsigned int location = glGetUniformLocation(m_shader_program, matrix_name);
+
+  glUniformMatrix4fv(location, 1, GL_FALSE, &matrix[0][0]);
+}
+
 Shader::~Shader() {
   glDeleteShader(m_fragment_shader);
   glDeleteShader(m_vertex_shader);
