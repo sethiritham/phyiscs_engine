@@ -1,5 +1,6 @@
 #include "Object.h"
-#include <array>
+#define PI 3.14159265358979323846
+#include <cmath>
 
 Triangle::Triangle(float centre[3], float width, float height,
                    TriangleTypes triangle_type)
@@ -76,6 +77,35 @@ void Quadrilateral::generate_quad() {
 
 std::array<Vertex, 4> Quadrilateral::get_vertices() { return m_vertices; }
 
-std::array<int, 6> Quadrilateral::get_indices() { return m_indices; }
+std::array<unsigned int, 6> Quadrilateral::get_indices() { return m_indices; }
 
 Quadrilateral::~Quadrilateral() {}
+
+Circle::Circle(float centre[3], float radius, unsigned int res)
+    : m_centre{centre[0], centre[1], centre[2]}, m_radius(radius), m_res(res) {}
+
+void Circle::generate_circle() {
+  m_vertices.reserve(m_res + 2);
+  m_vertices.push_back(
+      {m_centre[0], m_centre[1], m_centre[2], 1.0f, 0.0f, 0.0f});
+
+  float angle = 0.0f;
+
+  for (unsigned int i = 0; i <= m_res; ++i) {
+    Vertex pt;
+    angle = (2 * i * PI) / m_res;
+
+    pt.x = m_radius * std::cos(angle) + m_centre[0];
+    pt.y = m_radius * std::sin(angle) + m_centre[1];
+    pt.z = m_centre[2];
+    pt.r = 1.0f;
+    pt.g = 0.0f;
+    pt.b = 0.0f;
+
+    m_vertices.push_back(pt);
+  }
+}
+
+std::vector<Vertex> Circle::get_vertices() { return m_vertices; }
+
+Circle::~Circle() {}

@@ -88,7 +88,7 @@ void Shader::attach_shaders_and_link_program() {
   glLinkProgram(m_shader_program);
 }
 
-void Shader::use_shader_program() { glUseProgram(m_shader_program); }
+void Shader::use_shader_program() const { glUseProgram(m_shader_program); }
 
 Shader::~Shader() {
   glDeleteShader(m_fragment_shader);

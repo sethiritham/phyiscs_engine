@@ -1,3 +1,5 @@
+
+#pragma once
 #include "../vendor/glad/include/glad/glad.h"
 
 class VertexBuffer {
@@ -12,6 +14,8 @@ public:
   void bind() const;
 
   void unbind() const;
+
+  unsigned int get_vertices_count();
 
   ~VertexBuffer();
 };

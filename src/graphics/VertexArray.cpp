@@ -43,9 +43,9 @@ void VertexArrayBuffer::add_buffer(const VertexBuffer &vb) {
   }
 }
 
-void VertexArrayBuffer::bind() { glBindVertexArray(m_VertexBuffer_ID); }
+void VertexArrayBuffer::bind() const { glBindVertexArray(m_VertexBuffer_ID); }
 
-void VertexArrayBuffer::unbind() { glBindVertexArray(0); }
+void VertexArrayBuffer::unbind() const { glBindVertexArray(0); }
 
 VertexArrayBuffer::~VertexArrayBuffer() {
   glDeleteVertexArrays(1, &m_VertexBuffer_ID);

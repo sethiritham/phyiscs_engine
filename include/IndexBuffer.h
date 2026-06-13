@@ -1,17 +1,20 @@
+#pragma once
 #include "../vendor/glad/include/glad/glad.h"
 
 class IndexBuffer {
 private:
   unsigned int m_Renderer_ID;
   void *m_data;
-  unsigned int m_size;
+  unsigned int m_count;
 
 public:
-  IndexBuffer(void *data, unsigned int size);
+  IndexBuffer(void *data, unsigned int count);
 
-  void bind();
+  void bind() const;
 
-  void unbind();
+  unsigned int get_indices_count() const;
+
+  void unbind() const;
 
   ~IndexBuffer();
 };

@@ -1,3 +1,4 @@
+#pragma once
 #include "../vendor/glad/include/glad/glad.h"
 #include <string>
 
@@ -24,7 +25,7 @@ public:
 
   void attach_shaders_and_link_program();
 
-  void use_shader_program();
+  void use_shader_program() const;
 
   ~Shader();
 };

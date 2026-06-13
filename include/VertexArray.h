@@ -1,3 +1,4 @@
+#pragma once
 #include "../vendor/glad/include/glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "VertexBuffer.h"
@@ -47,11 +48,11 @@ private:
 public:
   VertexArrayBuffer(VertexArrayLayout layout);
 
-  void bind();
+  void bind() const;
 
   void add_buffer(const VertexBuffer &vb);
 
-  void unbind();
+  void unbind() const;
 
   ~VertexArrayBuffer();
 };

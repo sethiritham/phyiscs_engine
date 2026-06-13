@@ -1,5 +1,6 @@
 #include "../vendor/glad/include/glad/glad.h"
 #include <array>
+#include <vector>
 
 enum TriangleTypes { right_angle, equilateral, isoceles };
 enum QuadTypes { square, rectangle };
@@ -38,7 +39,7 @@ private:
   float m_height;
   QuadTypes m_quad_type;
   std::array<Vertex, 4> m_vertices;
-  std::array<int, 6> m_indices;
+  std::array<unsigned int, 6> m_indices;
 
 public:
   Quadrilateral(float centre[3], float width, float height,
@@ -49,13 +50,24 @@ public:
 
   std::array<Vertex, 4> get_vertices();
 
-  std::array<int, 6> get_indices();
+  std::array<unsigned int, 6> get_indices();
 
   ~Quadrilateral();
 };
 
-class Sphere {
+class Circle {
 private:
   float m_centre[3];
-  float m_width;
+  float m_radius;
+  unsigned int m_res;
+  std::vector<Vertex> m_vertices;
+
+public:
+  Circle(float centre[3], float radius, unsigned int res);
+
+  void generate_circle();
+
+  std::vector<Vertex> get_vertices();
+
+  ~Circle();
 };
