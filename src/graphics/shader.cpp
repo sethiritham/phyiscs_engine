@@ -96,6 +96,12 @@ void Shader::set_uniform_mat4(const char *matrix_name, glm::mat4 matrix) {
   glUniformMatrix4fv(location, 1, GL_FALSE, &matrix[0][0]);
 }
 
+void Shader::set_uniform_float(const char *float_name, float flt) {
+  unsigned int location = glGetUniformLocation(m_shader_program, float_name);
+
+  glUniform1f(location, flt);
+}
+
 Shader::~Shader() {
   glDeleteShader(m_fragment_shader);
   glDeleteShader(m_vertex_shader);

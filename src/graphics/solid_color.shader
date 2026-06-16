@@ -8,9 +8,11 @@ out vec3 ourColor;
 uniform mat4 u_model_matrix;
 uniform mat4 u_projection_matrix;
 
+uniform float u_aspect_ratio;
+
 void main()
 {
-    gl_Position = u_projection_matrix * u_model_matrix * vec4(aPos.x, aPos.y, aPos.z, 1.0f);
+    gl_Position = u_projection_matrix * u_model_matrix * vec4(aPos.x / u_aspect_ratio * 2.0f, aPos.y, aPos.z, 1.0f);
     ourColor = aColor;
 }
 

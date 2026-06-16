@@ -1,4 +1,5 @@
 #pragma once
+#include "Object.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -12,6 +13,7 @@ private:
   glm::vec3 m_gravity;
   float m_width;
   float m_height;
+  float m_res;
 
 public:
   PhysicalBody(bool apply_gravity, float mass, glm::vec3 initial_position,
@@ -22,4 +24,6 @@ public:
   void check_and_apply_bounding_collision();
 
   glm::vec3 get_position();
+
+  void set_restituion(float res);
 };

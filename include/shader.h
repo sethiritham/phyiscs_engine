@@ -30,5 +30,7 @@ public:
 
   void set_uniform_mat4(const char *matrix_name, glm::mat4 matrix);
 
+  void set_uniform_float(const char *float_name, float flt);
+
   ~Shader();
 };

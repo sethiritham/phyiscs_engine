@@ -19,6 +19,8 @@ public:
 
   bool should_close();
 
+  float get_aspect_ratio();
+
   void swap_buffers();
   ~Window();
 };

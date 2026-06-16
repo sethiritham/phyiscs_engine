@@ -1,4 +1,5 @@
 #include "Window.h"
+#include <GLFW/glfw3.h>
 #include <iostream>
 
 Window::Window(int w, int h, const char *title)
@@ -26,6 +27,19 @@ Window::Window(int w, int h, const char *title)
 }
 
 bool Window::should_close() { return glfwWindowShouldClose(m_window); }
+
+float Window::get_aspect_ratio() {
+  int height, width;
+
+  glfwGetFramebufferSize(m_window, &width, &height);
+
+  if (height == 0)
+    height = 1;
+
+  float aspect_ratio = (float)width / (float)height;
+
+  return aspect_ratio;
+}
 
 void Window::swap_buffers() {
   glfwSwapBuffers(m_window);

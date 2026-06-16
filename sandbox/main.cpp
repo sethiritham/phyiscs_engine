@@ -8,23 +8,17 @@
 #include "glm/ext/vector_float3.hpp"
 #include "shader.h"
 #include <GLFW/glfw3.h>
-#include <array>
-#include <iostream>
 #include <vector>
 
 int main() {
 
   float centre[3] = {0.0f, 0.0f, 0.0f};
-  Quadrilateral quad_1(centre, 0.4f, 0.7f, square);
-  Circle circ_1(centre, 0.2f, 36);
+  Circle circ_1(centre, 1.0f, 36);
 
-  quad_1.generate_quad();
   circ_1.generate_circle();
 
-  // std::vector<Vertex> vertices = circ_1->get_vertices();
-
-  std::array<Vertex, 4> vertices = quad_1.get_vertices();
-  std::array<unsigned int, 6> indices = quad_1.get_indices();
+  std::vector<Vertex> vertices = circ_1.get_vertices();
+  std::vector<unsigned int> indices = circ_1.get_indices();
 
   Window *window = new Window(800, 800, "PHYISCS RENDERER");
 
@@ -51,7 +45,7 @@ int main() {
   float last_frame = 0.0f;
 
   PhysicalBody physical_body(
-      true, 3.0f, glm::vec3(centre[0], centre[1], centre[2]), 0.4f, 0.7f);
+      true, 3.0f, glm::vec3(centre[0], centre[1], centre[2]), 2.0f, 2.0f);
 
   Entity entity(&renderer, &physical_body);
 
@@ -75,7 +69,8 @@ int main() {
     renderer.set_clear_color(0.0f, 1.0f, 0.0f, 1.0f);
     renderer.clear();
 
-    entity.Draw(&shader, vert_array_buffer, index_buffer);
+    entity.Draw(&shader, vert_array_buffer, index_buffer,
+                window->get_aspect_ratio());
 
     window->swap_buffers();
   }

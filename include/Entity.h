@@ -14,7 +14,7 @@ public:
   void Update(float delta_time);
 
   void Draw(Shader *shader, const VertexArrayBuffer &vao,
-            const IndexBuffer &ibo);
+            const IndexBuffer &ibo, float aspect_ratio);
 
   ~Entity();
 };

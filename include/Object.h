@@ -1,9 +1,10 @@
+#pragma once
 #include "../vendor/glad/include/glad/glad.h"
+#include "PhysicalBody.h"
 #include <array>
 #include <vector>
 
 enum TriangleTypes { right_angle, equilateral, isoceles };
-enum QuadTypes { square, rectangle };
 
 struct Vertex {
   float x;
@@ -15,16 +16,23 @@ struct Vertex {
   float b;
 };
 
-class Triangle {
+class Object {
+protected:
+  float m_current_position[3];
+
+public:
+  Object(float starting_position[3]);
+};
+
+class Triangle : public Object {
 private:
-  float m_centre[3];
   float m_width;
   float m_height;
   TriangleTypes m_triangle_type;
   std::array<Vertex, 3> m_vertices;
 
 public:
-  Triangle(float centre[3], float width, float height,
+  Triangle(float starting_position[3], float width, float height,
            TriangleTypes triangle_type);
 
   std::array<Vertex, 3> generate_vertices();
@@ -32,19 +40,16 @@ public:
   ~Triangle();
 };
 
-class Quadrilateral {
+class Quadrilateral : Object {
 private:
-  float m_centre[3];
   float m_width;
   float m_height;
-  QuadTypes m_quad_type;
   std::array<Vertex, 4> m_vertices;
   std::array<unsigned int, 6> m_indices;
 
 public:
-  Quadrilateral(float centre[3], float width, float height,
-                QuadTypes quad_type);
-  Quadrilateral(float centre[3], float side, QuadTypes quad_type);
+  Quadrilateral(float starting_position[3], float width, float height);
+  Quadrilateral(float starting_position[3], float side);
 
   void generate_quad();
 
@@ -55,19 +60,21 @@ public:
   ~Quadrilateral();
 };
 
-class Circle {
+class Circle : Object {
 private:
-  float m_centre[3];
   float m_radius;
   unsigned int m_res;
   std::vector<Vertex> m_vertices;
+  std::vector<unsigned int> m_indices;
 
 public:
-  Circle(float centre[3], float radius, unsigned int res);
+  Circle(float starting_position[3], float radius, unsigned int res);
 
   void generate_circle();
 
   std::vector<Vertex> get_vertices();
+
+  std::vector<unsigned int> get_indices();
 
   ~Circle();
 };
