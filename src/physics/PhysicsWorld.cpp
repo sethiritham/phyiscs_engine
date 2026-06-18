@@ -125,19 +125,20 @@ void PhysicsWorld::check_for_collisions() {
       float target_distance = m_particle_radius * 2;
 
       if (particle_distance <= target_distance) {
-        m_particles[i].physical_body->set_current_velocity(body_velo_2);
-        m_particles[j].physical_body->set_current_velocity(body_velo_1);
 
         glm::vec3 dir = glm::normalize(body_pos_2 - body_pos_1);
 
         float penetration = target_distance - particle_distance;
 
-        glm::vec3 seperation_vector = (dir)*penetration / 2.0f;
+        glm::vec3 seperation_vector = dir * (penetration / 2.0f);
 
-        m_particles[j].physical_body->set_current_position(
-            glm::vec3(body_pos_1.x + 2 * m_particle_radius,
-                      body_pos_1.y - 2 * m_particle_radius, 0.0f) *
-            dir);
+        m_particles[i].physical_body->set_current_position(body_pos_1 -
+                                                           seperation_vector);
+        m_particles[j].physical_body->set_current_position(body_pos_2 +
+                                                           seperation_vector);
+
+        m_particles[i].physical_body->set_current_velocity(body_velo_2);
+        m_particles[j].physical_body->set_current_velocity(body_velo_1);
       }
     }
   }
