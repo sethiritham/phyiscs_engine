@@ -20,15 +20,28 @@ void PhysicalBody::Step(float delta_time) {
     m_current_velocity = m_current_velocity + m_gravity * delta_time;
     m_current_position += m_current_velocity * delta_time;
   }
-
-  check_and_apply_bounding_collision();
 }
 
-void PhysicalBody::check_and_apply_bounding_collision() {
+void PhysicalBody::check_and_apply_bounding_collision(float aspect_ratio) {
   if (m_current_position.y <= -1.0f * (10.0f - m_height / 2.0f)) {
 
     m_current_position.y = -1.0f * (10.0f - m_height / 2.0f);
-    m_current_velocity.y = -1.0f * m_current_velocity.y * m_res;
+    m_current_velocity.y = std::abs(m_current_velocity.y) * m_res;
+  } else if (m_current_position.y >= 1.0f * (10.0f - m_height / 2.0f)) {
+
+    m_current_position.y = 1.0f * (10.0f - m_height / 2.0f);
+    m_current_velocity.y = -1.0f * std::abs(m_current_velocity.y) * m_res;
+  }
+
+  if (m_current_position.x <= -1.0f * (10.0f * aspect_ratio - m_width / 2.0f)) {
+
+    m_current_position.x = -1.0f * (10.0f * aspect_ratio - m_width / 2.0f);
+    m_current_velocity.x = std::abs(m_current_velocity.x) * m_res;
+  } else if (m_current_position.x >=
+             1.0f * (10.0f * aspect_ratio - m_width / 2.0f)) {
+
+    m_current_position.x = 1.0f * (10.0f * aspect_ratio - m_width / 2.0f);
+    m_current_velocity.x = -1.0f * std::abs(m_current_velocity.x) * m_res;
   }
 }
 
@@ -40,3 +53,5 @@ void PhysicalBody::set_current_position(glm::vec3 pos) {
   m_current_position = pos;
 }
 void PhysicalBody::set_restituion(float res) { m_res = res; }
+
+float PhysicalBody::get_mass() { return m_mass; }

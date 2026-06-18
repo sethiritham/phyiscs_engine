@@ -20,7 +20,7 @@ public:
 
   void Step(float delta_time);
 
-  void check_and_apply_bounding_collision();
+  void check_and_apply_bounding_collision(float aspect_ratio);
 
   glm::vec3 get_current_position();
 
@@ -31,4 +31,6 @@ public:
   void set_current_position(glm::vec3 pos);
 
   void set_restituion(float res);
+
+  float get_mass();
 };

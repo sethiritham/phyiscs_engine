@@ -21,6 +21,8 @@ public:
 
   float get_aspect_ratio();
 
+  GLFWwindow *get_window();
+
   void swap_buffers();
   ~Window();
 };

@@ -46,6 +46,8 @@ void Window::swap_buffers() {
   glfwPollEvents();
 }
 
+GLFWwindow *Window::get_window() { return m_window; }
+
 Window::~Window() {
   if (m_window) {
     glfwDestroyWindow(m_window);

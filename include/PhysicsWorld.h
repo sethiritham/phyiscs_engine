@@ -37,5 +37,7 @@ public:
 
   void phyiscs_loop();
 
+  void generate_particle();
+
   ~PhysicsWorld();
 };
