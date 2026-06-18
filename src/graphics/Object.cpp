@@ -96,13 +96,11 @@ std::array<unsigned int, 6> Quadrilateral::get_indices() { return m_indices; }
 
 Quadrilateral::~Quadrilateral() {}
 
-Circle::Circle(float starting_position[3], float radius, unsigned int res)
-    : Object(starting_position), m_radius(radius), m_res(res) {}
+Circle::Circle(float radius, unsigned int res) : m_radius(radius), m_res(res) {}
 
 void Circle::generate_circle() {
   m_vertices.reserve(m_res + 2);
-  m_vertices.push_back({m_current_position[0], m_current_position[1],
-                        m_current_position[2], 1.0f, 0.0f, 0.0f});
+  m_vertices.push_back({0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f});
 
   float angle = 0.0f;
 
@@ -110,9 +108,9 @@ void Circle::generate_circle() {
     Vertex pt;
     angle = (2 * i * PI) / m_res;
 
-    pt.x = m_radius * std::cos(angle) + m_current_position[0];
-    pt.y = m_radius * std::sin(angle) + m_current_position[1];
-    pt.z = m_current_position[2];
+    pt.x = m_radius * std::cos(angle);
+    pt.y = m_radius * std::sin(angle);
+    pt.z = 0.0f;
     pt.r = 1.0f;
     pt.g = 0.0f;
     pt.b = 0.0f;

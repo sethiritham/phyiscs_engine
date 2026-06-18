@@ -1,5 +1,4 @@
 #include "IndexBuffer.h"
-#include "Object.h"
 
 IndexBuffer::IndexBuffer(void *data, unsigned int count)
     : m_data(data), m_count(count) {

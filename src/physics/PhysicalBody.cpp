@@ -11,7 +11,9 @@ PhysicalBody::PhysicalBody(bool apply_gravity, float mass,
   m_res = 0.8f;
 }
 
-glm::vec3 PhysicalBody::get_position() { return m_current_position; }
+glm::vec3 PhysicalBody::get_current_position() { return m_current_position; }
+
+glm::vec3 PhysicalBody::get_current_velocity() { return m_current_velocity; }
 
 void PhysicalBody::Step(float delta_time) {
   if (m_apply_gravity) {
@@ -30,4 +32,11 @@ void PhysicalBody::check_and_apply_bounding_collision() {
   }
 }
 
+void PhysicalBody::set_current_velocity(glm::vec3 velo) {
+  m_current_velocity = velo;
+}
+
+void PhysicalBody::set_current_position(glm::vec3 pos) {
+  m_current_position = pos;
+}
 void PhysicalBody::set_restituion(float res) { m_res = res; }

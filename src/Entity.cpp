@@ -4,8 +4,6 @@
 #include "glm/ext/matrix_float4x4.hpp"
 #include "glm/ext/matrix_transform.hpp"
 #include "shader.h"
-#include <iostream>
-#include <ostream>
 
 Entity::Entity(Renderer *renderer, PhysicalBody *physical_body)
     : m_renderer(renderer), m_phyisical_body(physical_body) {}
@@ -14,7 +12,7 @@ void Entity::Update(float delta_time) { m_phyisical_body->Step(delta_time); }
 
 void Entity::Draw(Shader *shader, const VertexArrayBuffer &vao,
                   const IndexBuffer &ibo, float aspect_ratio) {
-  glm::vec3 pos = m_phyisical_body->get_position();
+  glm::vec3 pos = m_phyisical_body->get_current_position();
   glm::mat4 model(1.0f);
 
   model = glm::translate(model, pos);

@@ -1,4 +1,3 @@
-#include "../vendor/glm/glm/ext/matrix_float3x3.hpp"
 #include "PhysicalBody.h"
 #include "Renderer.h"
 #include "VertexArray.h"

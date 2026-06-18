@@ -15,7 +15,5 @@ public:
 
   void unbind() const;
 
-  unsigned int get_vertices_count();
-
   ~VertexBuffer();
 };

@@ -1,5 +1,4 @@
 #pragma once
-#include "Object.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -23,7 +22,13 @@ public:
 
   void check_and_apply_bounding_collision();
 
-  glm::vec3 get_position();
+  glm::vec3 get_current_position();
+
+  glm::vec3 get_current_velocity();
+
+  void set_current_velocity(glm::vec3 velo);
+
+  void set_current_position(glm::vec3 pos);
 
   void set_restituion(float res);
 };

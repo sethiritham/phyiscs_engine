@@ -1,6 +1,5 @@
 #pragma once
 #include "../vendor/glad/include/glad/glad.h"
-#include "PhysicalBody.h"
 #include <array>
 #include <vector>
 
@@ -60,7 +59,7 @@ public:
   ~Quadrilateral();
 };
 
-class Circle : Object {
+class Circle {
 private:
   float m_radius;
   unsigned int m_res;
@@ -68,7 +67,7 @@ private:
   std::vector<unsigned int> m_indices;
 
 public:
-  Circle(float starting_position[3], float radius, unsigned int res);
+  Circle(float radius, unsigned int res);
 
   void generate_circle();
 
