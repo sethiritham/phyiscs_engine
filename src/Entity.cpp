@@ -17,7 +17,8 @@ void Entity::Draw(Shader *shader, const VertexArrayBuffer &vao,
 
   model = glm::translate(model, pos);
 
-  glm::mat4 projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f);
+  glm::mat4 projection =
+      glm::ortho(-10.0f * aspect_ratio, 10.0f * aspect_ratio, -10.0f, 10.0f);
 
   shader->use_shader_program();
   shader->set_uniform_mat4("u_model_matrix", model);

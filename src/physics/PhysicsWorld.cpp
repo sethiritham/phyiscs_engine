@@ -77,6 +77,8 @@ void PhysicsWorld::phyiscs_loop() {
 
   while (!m_window->should_close()) {
 
+    float live_aspect = m_window->get_aspect_ratio();
+
     float current_frame = glfwGetTime();
     delta_time = current_frame - last_frame;
     last_frame = current_frame;
@@ -98,14 +100,16 @@ void PhysicsWorld::phyiscs_loop() {
       for (int i = 0; i < m_num_particles; i++) {
 
         m_particles[i].physical_body->check_and_apply_bounding_collision(
-            m_window->get_aspect_ratio());
+            live_aspect);
       }
       check_for_collisions();
     }
 
     if (glfwGetMouseButton(m_window->get_window(), GLFW_MOUSE_BUTTON_LEFT) ==
         GLFW_PRESS) {
-      generate_particle();
+      double xpos, ypos;
+      glfwGetCursorPos(m_window->get_window(), &xpos, &ypos);
+      generate_particle(-8.0f, 8.0f);
     }
 
     m_renderer->set_clear_color(0.0f, 1.0f, 0.0f, 1.0f);
@@ -113,19 +117,18 @@ void PhysicsWorld::phyiscs_loop() {
 
     for (int i = 0; i < m_particles.size(); i++) {
       m_particles[i].entity->Draw(m_shader, *m_vert_array_buffer,
-                                  *m_index_buffer,
-                                  m_window->get_aspect_ratio());
+                                  *m_index_buffer, live_aspect);
     }
 
     m_window->swap_buffers();
   }
 }
 
-void PhysicsWorld::generate_particle() {
+void PhysicsWorld::generate_particle(float x, float y) {
   Particles particle;
 
   particle.physical_body =
-      new PhysicalBody(true, 1.0f, glm::vec3(-8.0f, 8.0f, 0.0f), 2.0f, 2.0f);
+      new PhysicalBody(true, 1.0f, glm::vec3(x, y, 0.0f), 2.0f, 2.0f);
 
   particle.entity = new Entity(m_renderer, particle.physical_body);
 

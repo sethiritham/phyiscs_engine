@@ -1,5 +1,6 @@
 #include "PhysicalBody.h"
 #include "glm/ext/vector_float3.hpp"
+#include <iostream>
 
 PhysicalBody::PhysicalBody(bool apply_gravity, float mass,
                            glm::vec3 initial_position, float width,

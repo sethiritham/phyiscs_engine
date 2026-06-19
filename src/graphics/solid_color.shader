@@ -12,7 +12,7 @@ uniform float u_aspect_ratio;
 
 void main()
 {
-    gl_Position = u_projection_matrix * u_model_matrix * vec4(aPos.x / u_aspect_ratio, aPos.y, aPos.z, 1.0f);
+    gl_Position = u_projection_matrix * u_model_matrix * vec4(aPos.x, aPos.y, aPos.z, 1.0f);
     ourColor = aColor;
 }
 
