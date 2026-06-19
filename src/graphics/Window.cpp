@@ -3,13 +3,13 @@
 #include <iostream>
 
 Window::Window(int w, int h, const char *title)
-    : width(w), height(h), window_title(title) {
+    : m_width(w), m_height(h), window_title(title) {
   glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-  m_window = glfwCreateWindow(width, height, window_title, NULL, NULL);
+  m_window = glfwCreateWindow(m_width, m_height, window_title, NULL, NULL);
   if (m_window == NULL) {
     std::cout << "WINDOW CREATION FAILED!" << std::endl;
     glfwTerminate();
@@ -21,7 +21,7 @@ Window::Window(int w, int h, const char *title)
     std::cout << "GLAD FAILED!" << std::endl;
   }
 
-  glViewport(0, 0, width, width);
+  glViewport(0, 0, m_width, m_height);
 
   glfwSetFramebufferSizeCallback(m_window, frame_buffer_size_callback);
 }
@@ -44,6 +44,18 @@ float Window::get_aspect_ratio() {
 void Window::swap_buffers() {
   glfwSwapBuffers(m_window);
   glfwPollEvents();
+}
+
+int Window::get_current_width() {
+  glfwGetFramebufferSize(m_window, &m_width, &m_height);
+
+  return m_width;
+}
+
+int Window::get_current_height() {
+  glfwGetFramebufferSize(m_window, &m_width, &m_height);
+
+  return m_height;
 }
 
 GLFWwindow *Window::get_window() { return m_window; }

@@ -3,8 +3,8 @@
 
 class Window {
 private:
-  int width;
-  int height;
+  int m_width;
+  int m_height;
   const char *window_title;
 
   GLFWwindow *m_window;
@@ -20,6 +20,10 @@ public:
   bool should_close();
 
   float get_aspect_ratio();
+
+  int get_current_width();
+
+  int get_current_height();
 
   GLFWwindow *get_window();
 

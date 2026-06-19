@@ -109,7 +109,17 @@ void PhysicsWorld::phyiscs_loop() {
         GLFW_PRESS) {
       double xpos, ypos;
       glfwGetCursorPos(m_window->get_window(), &xpos, &ypos);
-      generate_particle(-8.0f, 8.0f);
+
+      int width = m_window->get_current_width();
+      int height = m_window->get_current_height();
+
+      float ndc_x = (2.0f * (float)xpos) / (float)width - 1.0f;
+      float ndc_y = 1.0f - (2.0f * (float)ypos) / (float)height;
+
+      float world_x = ndc_x * 10.0f * live_aspect;
+      float world_y = ndc_y * 10.0f;
+
+      generate_particle(world_x, world_y);
     }
 
     m_renderer->set_clear_color(0.0f, 1.0f, 0.0f, 1.0f);
